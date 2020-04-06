@@ -38,7 +38,7 @@ def imshow(img):
 class AlexNet(nn.Module):
     def __init__(self):
         super(AlexNet,self).__init__()
-        self.conv1 = nn.Conv2d(in_channels=1,out_channels=96,kernel_size=11,stride=4)
+        self.conv1 = nn.Conv2d(in_channels=1,out_channels=96,kernel_size=10,stride=4,padding=1)#input 1*28*28 output 96*5*5
         self.pool1 = nn.MaxPool2d(kernel_size=3,stride=2)
         self.conv2 = nn.Conv2d(in_channels=96,out_channels=256,kernel_size=5,padding=2)
         self.pool2 = nn.MaxPool2d(kernel_size=3, stride=2)

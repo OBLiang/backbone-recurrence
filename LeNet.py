@@ -6,7 +6,7 @@ import torch
 import torchvision
 import torch.nn as nn
 import torch.utils.data as Data
-EPOCH=1
+EPOCH=5
 BATCH_SIZE=50
 LR=0.001
 DOWNLOAD_MNIST=False
