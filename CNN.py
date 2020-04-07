@@ -72,6 +72,8 @@ for epo in range(epoch):
         # img=Variable(img)
         # label=Variable(label
         out=model(img)
+        # print("label",label)
+        # print(torch.max(out,1))
         # print(out[0])
         # print(label[0])
         loss=criterion(out,label)
@@ -79,6 +81,15 @@ for epo in range(epoch):
         loss.backward()
         optimizer.step()
         if counter%20==0:
-            print("batch:{},loss:{}".format(counter*20,loss.item()))
+            total = 0
+            correct = 0
+            for imgtest, labeltext in test_loader:
+                outest = model(imgtest)
+                correct += (torch.max(outest, 1)[1] == labeltext).sum().numpy()
+                # print(correct)
+                total += len(labeltext)
+            accuracy = float(correct / total)
+            print("batch:{},loss:{},accuracy:{:.4f}".format(counter * 20, loss.item(), accuracy * 100))
+
 
 print("gameover")
