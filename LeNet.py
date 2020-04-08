@@ -6,7 +6,7 @@ import torch
 import torchvision
 import torch.nn as nn
 import torch.utils.data as Data
-EPOCH=5
+EPOCH=1
 BATCH_SIZE=50
 LR=0.001
 DOWNLOAD_MNIST=False
@@ -35,6 +35,7 @@ class LeNet(nn.Module):
                 stride=1,
                 padding=2
             ),#input shape 1*28*28->output shape=6*28*28
+            # nn.ReLU(),
             nn.MaxPool2d(2,2),#output shape=6*14*14
             nn.Conv2d(
                 in_channels=6,
@@ -42,10 +43,14 @@ class LeNet(nn.Module):
                 kernel_size=5,
                 stride=1,
             ),#output shape=16*10*10
+            # nn.ReLU(),
             nn.MaxPool2d(2,2),#output shape=16*5*5
         )
         self.classfier=nn.Sequential(
-            nn.Linear(16*5*5,10),
+            # nn.Linear(16*5*5,120),
+            # nn.Linear(120,84),
+            # nn.Linear(84,10),
+            nn.Linear(400,10)
         )
     def forward(self,x):
         x=self.feature(x)
@@ -68,4 +73,4 @@ for epo in range(EPOCH):
         loss.backward()
         optimizer.step()
         if(counter%20==0):
-            print("batch:{},loss:{}".format(counter*20,loss.item()))
+            print("batch:{},loss:{}".format(counter,loss.item()))

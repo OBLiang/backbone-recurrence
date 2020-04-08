@@ -2,3 +2,21 @@
 2、复现Lenex,参数根据Mnist输入进行修改
 3、复现AlexNet，实现主干网络和训练过程较为简单，但当开始根据输入略调整网络参数时，发现输入图片过小，
     在尽可能少的修改原生网络前提下，1*28*28的Minist数据经过第一轮Conv+pooling变得几乎缺少平面维度，需要考虑采用其他大规模像素数据集。
+4.3的问题先搁置，转而研究网络设计问题：
+    4.1为何使用交叉熵cross entropy loss?
+        损失函数分为两大类：分类损失和回归损失，一般分类损失中使用交叉熵，回归问题中使用MSE均方误差。
+        且交叉熵往往和Sigmod、softmax一同出现。
+     4,2为何使用SGD?
+        优化函数(基于梯度下降)主要有三种：批量梯度下降BGD，随机梯度下降SGD，小批量梯度下降MBGD
+        批量梯度下降在一个epoch中训练所有数据
+        SGD在一个epoch中训练一个数据
+        MBGD在一个epoch中训练一个tiny batch数据
+        在CNN.py中先设置了batch_size,这里训练集之前已经进行了随机化，但是在optimizer中使用了SGD，可以当做小批量梯度随机算法？MSGD?
+        不存在，仍然是SGD，将epoch当做epoch*batchsize,每一次仍只进行一次采样和更新。
+     4.3lossfun和optimizer是否有组合关系？目前看来并没有，都是根据实际应用决定。
+     4.4神经网络训练过程：
+        pre=model(input)
+        loss=lossfun(pre,reality)
+        optimizer.zerpgrad()
+        loss.backward()
+
