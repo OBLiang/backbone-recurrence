@@ -62,15 +62,16 @@ lenet=LeNet()
 
 lossfun=nn.CrossEntropyLoss()
 optimizer=torch.optim.SGD(lenet.parameters(),lr=LR)
-
-counter=0
-for epo in range(EPOCH):
-    for img,label in train_loader:
-        counter+=1
-        out=lenet(img)
-        loss=lossfun(out,label)
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
-        if(counter%20==0):
-            print("batch:{},loss:{}".format(counter,loss.item()))
+for name,parameters in lenet.named_parameters():
+    print(name,parameters.size())
+# counter=0
+# for epo in range(EPOCH):
+#     for img,label in train_loader:
+#         counter+=1
+#         out=lenet(img)
+#         loss=lossfun(out,label)
+#         optimizer.zero_grad()
+#         loss.backward()
+#         optimizer.step()
+#         if(counter%20==0):
+#             print("batch:{},loss:{}".format(counter,loss.item()))
